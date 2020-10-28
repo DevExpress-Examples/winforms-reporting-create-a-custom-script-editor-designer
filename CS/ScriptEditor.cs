@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +14,6 @@ namespace ScriptEditorExample {
             Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
         }
 
-        #region ISyntaxEditor Members
 
         bool IScriptEditor.Modified {
             get { return base.Modified; }
@@ -37,7 +36,7 @@ namespace ScriptEditorExample {
         void IScriptEditor.SetCaretPosition(int line, int column) {
             SetCaretPositionCore(line, column);
         }
-        
+
         void SetCaretPositionCore(int line, int column) {
             int start = column;
             for(int i = 0; i < Lines.Length && i < line; i++) {
@@ -47,7 +46,7 @@ namespace ScriptEditorExample {
             this.Focus();
             this.Select(start, 0);
         }
-        
+
         void IScriptEditor.HighlightErrors(System.CodeDom.Compiler.CompilerErrorCollection errors) {
             if(errors.Count == 0) return;
             int line = Math.Max(0, errors[0].Line - 1);
@@ -55,7 +54,9 @@ namespace ScriptEditorExample {
             BeginInvoke(new Action<int, int>(SetCaretPositionCore), line, column);
         }
 
-        #endregion
+        string IScriptEditor.GetText(int line) {
+            return Lines[line];
+        }
     }
     class ScriptEditorService : IScriptEditorService {
         IScriptEditor IScriptEditorService.CreateEditor(IServiceProvider serviceProvider) {
