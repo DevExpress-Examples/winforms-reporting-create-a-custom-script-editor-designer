@@ -1,7 +1,7 @@
 <!-- default file list -->
 *Files to look at*:
 
-* **[ScriptEditor.cs](./CS/ScriptEditorExample/ScriptEditor.cs) (VB: [ScriptEditor.vb](./VB/ScriptEditorExample/ScriptEditor.vb))**
+* **[ScriptEditor.cs](./CS/ScriptEditor.cs) (VB: [ScriptEditor.vb](./VB/ScriptEditor.vb))**
 <!-- default file list end -->
 # WinForms End-User Designer - How to create a custom script editor
 
