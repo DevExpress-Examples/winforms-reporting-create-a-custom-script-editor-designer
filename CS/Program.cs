@@ -19,7 +19,7 @@ namespace ScriptEditorExample {
             using(var tool = new ReportDesignTool(report)) {
                 var form = tool.DesignRibbonForm;
                 form.DesignMdiController.AddService(typeof(DevExpress.XtraReports.Design.IScriptEditorService), new ScriptEditorService());
-                form.DesignDockManager.Load += (_, e) => form.DesignMdiController.ActiveDesignPanel.ExecCommand(DevExpress.XtraReports.UserDesigner.ReportCommand.ShowScriptsTab);
+                form.DesignDockManager.Load += (s, e) => form.DesignMdiController.ActiveDesignPanel.ExecCommand(DevExpress.XtraReports.UserDesigner.ReportCommand.ShowScriptsTab);
                 tool.ShowRibbonDesignerDialog();
             }
         }

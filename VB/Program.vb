@@ -19,9 +19,7 @@ Namespace ScriptEditorExample
 			Using tool = New ReportDesignTool(report)
 				Dim form = tool.DesignRibbonForm
 				form.DesignMdiController.AddService(GetType(DevExpress.XtraReports.Design.IScriptEditorService), New ScriptEditorService())
-'INSTANT VB NOTE: An underscore by itself is not a valid identifier in VB:
-'ORIGINAL LINE: form.DesignDockManager.Load += (_, e) => form.DesignMdiController.ActiveDesignPanel.ExecCommand(DevExpress.XtraReports.UserDesigner.ReportCommand.ShowScriptsTab);
-				AddHandler form.DesignDockManager.Load, Sub(underscore, e) form.DesignMdiController.ActiveDesignPanel.ExecCommand(DevExpress.XtraReports.UserDesigner.ReportCommand.ShowScriptsTab)
+				AddHandler form.DesignDockManager.Load, Sub(s, e) form.DesignMdiController.ActiveDesignPanel.ExecCommand(DevExpress.XtraReports.UserDesigner.ReportCommand.ShowScriptsTab)
 				tool.ShowRibbonDesignerDialog()
 			End Using
 			End Using
