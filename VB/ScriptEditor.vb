@@ -1,10 +1,7 @@
 ﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
 Imports System.Windows.Forms
 Imports DevExpress.XtraReports.Design
+Imports DevExpress.XtraReports.Scripting
 
 Namespace ScriptEditorExample
 	Friend Class ScriptEditor
@@ -62,7 +59,7 @@ Namespace ScriptEditorExample
 			Me.Select(start, 0)
 		End Sub
 
-		Private Sub IScriptEditor_HighlightErrors(ByVal errors As System.CodeDom.Compiler.CompilerErrorCollection) Implements IScriptEditor.HighlightErrors
+		Private Sub IScriptEditor_HighlightErrors(ByVal errors As ScriptErrorCollection) Implements IScriptEditor.HighlightErrors
 			If errors.Count = 0 Then
 				Return
 			End If

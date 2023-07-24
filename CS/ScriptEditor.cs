@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraReports.Design;
+using DevExpress.XtraReports.Scripting;
 
 namespace ScriptEditorExample {
     class ScriptEditor : TextBox, IScriptEditor {
@@ -47,7 +44,7 @@ namespace ScriptEditorExample {
             this.Select(start, 0);
         }
 
-        void IScriptEditor.HighlightErrors(System.CodeDom.Compiler.CompilerErrorCollection errors) {
+        void IScriptEditor.HighlightErrors(ScriptErrorCollection errors) {
             if(errors.Count == 0) return;
             int line = Math.Max(0, errors[0].Line - 1);
             int column = Math.Max(0, errors[0].Column - 1);
