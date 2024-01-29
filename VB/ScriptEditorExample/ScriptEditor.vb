@@ -1,83 +1,80 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
+Imports System
 Imports System.Windows.Forms
 Imports DevExpress.XtraReports.Design
 
 Namespace ScriptEditorExample
+
     Friend Class ScriptEditor
         Inherits TextBox
         Implements IScriptEditor
 
         Public Sub New()
             Multiline = True
-            BorderStyle = System.Windows.Forms.BorderStyle.None
+            BorderStyle = BorderStyle.None
             Font = New System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
         End Sub
 
-        #Region "ISyntaxEditor Members"
-
-        Private Property IScriptEditor_Modified() As Boolean Implements IScriptEditor.Modified
+'#Region "ISyntaxEditor Members"
+        Private Property IScriptEditor_Modified As Boolean Implements IScriptEditor.Modified
             Get
-                Return MyBase.Modified
+                Return Modified
             End Get
+
             Set(ByVal value As Boolean)
-                MyBase.Modified = value
+                Modified = value
             End Set
         End Property
 
-        Private Property IScriptEditor_Text() As String Implements IScriptEditor.Text
+        Private Property IScriptEditor_Text As String Implements IScriptEditor.Text
             Get
-                Return MyBase.Text
+                Return Text
             End Get
+
             Set(ByVal value As String)
-                MyBase.Text = value
+                Text = value
             End Set
         End Property
 
         Private Sub IScriptEditor_AppendText(ByVal text As String) Implements IScriptEditor.AppendText
-            MyBase.AppendText(text)
+            AppendText(text)
         End Sub
 
-        Private ReadOnly Property IScriptEditor_LinesCount() As Integer Implements IScriptEditor.LinesCount
+        Private ReadOnly Property LinesCount As Integer Implements IScriptEditor.LinesCount
             Get
                 Return Lines.Length
             End Get
         End Property
 
-        Private Sub IScriptEditor_SetCaretPosition(ByVal line As Integer, ByVal column As Integer) Implements IScriptEditor.SetCaretPosition
+        Private Sub SetCaretPosition(ByVal line As Integer, ByVal column As Integer) Implements IScriptEditor.SetCaretPosition
             SetCaretPositionCore(line, column)
         End Sub
 
         Private Sub SetCaretPositionCore(ByVal line As Integer, ByVal column As Integer)
             Dim start As Integer = column
             Dim i As Integer = 0
-            Do While i < Lines.Length AndAlso i < line
+            While i < Lines.Length AndAlso i < line
                 start += Lines(i).Length
-                start += ControlChars.CrLf.Length
+                start += Microsoft.VisualBasic.Constants.vbCrLf.Length
                 i += 1
-            Loop
-            Me.Focus()
-            Me.Select(start, 0)
+            End While
+
+            Focus()
+            [Select](start, 0)
         End Sub
 
-        Private Sub IScriptEditor_HighlightErrors(ByVal errors As System.CodeDom.Compiler.CompilerErrorCollection) Implements IScriptEditor.HighlightErrors
-            If errors.Count = 0 Then
-                Return
-            End If
+        Private Sub HighlightErrors(ByVal errors As CodeDom.Compiler.CompilerErrorCollection) Implements IScriptEditor.HighlightErrors
+            If errors.Count = 0 Then Return
             Dim line As Integer = Math.Max(0, errors(0).Line - 1)
             Dim column As Integer = Math.Max(0, errors(0).Column - 1)
             BeginInvoke(New Action(Of Integer, Integer)(AddressOf SetCaretPositionCore), line, column)
         End Sub
-
-        #End Region
+'#End Region
     End Class
+
     Friend Class ScriptEditorService
         Implements IScriptEditorService
 
-        Private Function IScriptEditorService_CreateEditor(ByVal serviceProvider As IServiceProvider) As IScriptEditor Implements IScriptEditorService.CreateEditor
+        Private Function CreateEditor(ByVal serviceProvider As IServiceProvider) As IScriptEditor Implements IScriptEditorService.CreateEditor
             Return New ScriptEditor()
         End Function
     End Class
